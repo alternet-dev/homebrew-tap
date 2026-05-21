@@ -1,0 +1,68 @@
+name: bump formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: "Formula to bump (source-built formulae only)"
+        required: true
+        type: choice
+        options:
+          - wss-mux
+          - wavefront
+      tag:
+        description: "New upstream release tag, e.g. v0.6.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update formula and open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Pass workflow inputs through env, never interpolated into the script
+          # body, so a hostile value cannot break out of the shell.
+          FORMULA: ${{ inputs.formula }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+
+          # TAG is free-text input: constrain it to a version string before it
+          # reaches curl/sed/git. This rejects every shell metacharacter.
+          if [[ ! "${TAG}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::tag '${TAG}' is not a valid version (expected vMAJOR.MINOR.PATCH)"
+            exit 1
+          fi
+
+          file="Formula/${FORMULA}.rb"
+          url="https://github.com/alternet-dev/${FORMULA}/archive/refs/tags/${TAG}.tar.gz"
+
+          echo "Fetching ${url}"
+          sha="$(curl -fsSL "${url}" | shasum -a 256 | cut -d' ' -f1)"
+          echo "Computed sha256: ${sha}"
+
+          branch="bump/${FORMULA}-${TAG}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "${branch}"
+
+          sed -i -E "s#^  url \".*\"#  url \"${url}\"#" "${file}"
+          sed -i -E "s#^  sha256 \".*\"#  sha256 \"${sha}\"#" "${file}"
+
+          git add "${file}"
+          git commit -m "${FORMULA} ${TAG}"
+          git push -u origin "${branch}"
+
+          gh pr create \
+            --base trunk \
+            --head "${branch}" \
+            --title "${FORMULA} ${TAG}" \
+            --body "Automated bump of ${FORMULA} to ${TAG}. Recomputed sha256 from the upstream tag archive."

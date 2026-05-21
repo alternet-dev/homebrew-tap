@@ -1,0 +1,7 @@
+# Tap-specific RuboCop tweaks, merged on top of Homebrew's defaults by
+# `brew style`. Helper Ruby under lib/ carries no Sorbet signatures, so the
+# sigil-strictness cops are not meaningful for this tap.
+Sorbet/StrictSigil:
+  Enabled: false
+Sorbet/TrueSigil:
+  Enabled: false
