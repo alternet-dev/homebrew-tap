@@ -36,26 +36,35 @@ jobs:
           set -euo pipefail
 
           # TAG is free-text input: constrain it to a version string before it
-          # reaches curl/sed/git. This rejects every shell metacharacter.
+          # reaches git/sed. This rejects every shell metacharacter.
           if [[ ! "${TAG}" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::error::tag '${TAG}' is not a valid version (expected vMAJOR.MINOR.PATCH)"
             exit 1
           fi
 
           file="Formula/${FORMULA}.rb"
-          url="https://github.com/alternet-dev/${FORMULA}/archive/refs/tags/${TAG}.tar.gz"
+          repo="https://github.com/alternet-dev/${FORMULA}.git"
 
-          echo "Fetching ${url}"
-          sha="$(curl -fsSL "${url}" | shasum -a 256 | cut -d' ' -f1)"
-          echo "Computed sha256: ${sha}"
+          # Resolve the tag to its immutable commit SHA. Annotated tags expose
+          # the commit through the peeled ^{} ref; a lightweight tag already is
+          # the commit.
+          revision="$(git ls-remote "${repo}" "refs/tags/${TAG}^{}" | cut -f1)"
+          if [ -z "${revision}" ]; then
+            revision="$(git ls-remote "${repo}" "refs/tags/${TAG}" | cut -f1)"
+          fi
+          if [ -z "${revision}" ]; then
+            echo "::error::tag '${TAG}' not found in ${repo}"
+            exit 1
+          fi
+          echo "Resolved ${TAG} -> ${revision}"
 
           branch="bump/${FORMULA}-${TAG}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "${branch}"
 
-          sed -i -E "s#^  url \".*\"#  url \"${url}\"#" "${file}"
-          sed -i -E "s#^  sha256 \".*\"#  sha256 \"${sha}\"#" "${file}"
+          sed -i -E "s#^      tag:[[:space:]]+\".*\"#      tag:      \"${TAG}\"#" "${file}"
+          sed -i -E "s#^      revision:[[:space:]]+\".*\"#      revision: \"${revision}\"#" "${file}"
 
           git add "${file}"
           git commit -m "${FORMULA} ${TAG}"
@@ -65,4 +74,4 @@ jobs:
             --base trunk \
             --head "${branch}" \
             --title "${FORMULA} ${TAG}" \
-            --body "Automated bump of ${FORMULA} to ${TAG}. Recomputed sha256 from the upstream tag archive."
+            --body "Automated bump of ${FORMULA} to ${TAG} (commit ${revision})."

@@ -4,12 +4,15 @@
 class WssMux < Formula
   desc "WebSocket multiplexer for server-driven event fanout"
   homepage "https://github.com/alternet-dev/wss-mux"
-  url "https://github.com/alternet-dev/wss-mux/archive/refs/tags/v0.5.0.tar.gz"
-  sha256 "408c217dc49666ef4ea6be649b2a289c8ee6fd08add06741428d1784cef98b70"
+  # GitHub's generated /archive/ tarballs are not checksum-stable; pin to the
+  # tag's immutable commit instead.
+  url "https://github.com/alternet-dev/wss-mux.git",
+      tag:      "v0.5.0",
+      revision: "3d4fb32d7f1ef4bd4e3072abac4877e866e6448d"
   license any_of: ["MIT", "Apache-2.0"]
 
   livecheck do
-    url "https://github.com/alternet-dev/wss-mux.git"
+    url :stable
     strategy :git
   end
 

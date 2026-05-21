@@ -4,12 +4,15 @@
 class Wavefront < Formula
   desc "Edge proxy mapping a versioned external contract onto one internal backend"
   homepage "https://github.com/alternet-dev/wavefront"
-  url "https://github.com/alternet-dev/wavefront/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "508f2b06f2f3ded25a22d6a67fce2acd23c98d27e84d2d0f43469cef94c40588"
+  # GitHub's generated /archive/ tarballs are not checksum-stable; pin to the
+  # tag's immutable commit instead.
+  url "https://github.com/alternet-dev/wavefront.git",
+      tag:      "v0.2.0",
+      revision: "833fcf5d83f764be0fab61dbf454231b19e36f41"
   license any_of: ["Apache-2.0", "MIT"]
 
   livecheck do
-    url "https://github.com/alternet-dev/wavefront.git"
+    url :stable
     strategy :git
   end
 

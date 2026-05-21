@@ -56,15 +56,16 @@ brew upgrade wss-mux    # one formula
 
 Drop a new file in `Formula/<name>.rb`. This tap uses two patterns.
 
-**Public repo, built from source** (see `wss-mux.rb`, `wavefront.rb`) — point
-`url` at a tag archive and build with the language toolchain:
+**Public repo, built from source** (see `wss-mux.rb`, `wavefront.rb`) — pin
+`url` to the tag's commit and build with the language toolchain:
 
-```ruby
+```text
 class MyTool < Formula
   desc "..."
   homepage "https://github.com/alternet-dev/my-tool"
-  url "https://github.com/alternet-dev/my-tool/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "..." # shasum -a 256 of the tarball above
+  url "https://github.com/alternet-dev/my-tool.git",
+      tag:      "v1.0.0",
+      revision: "<commit SHA of the tag>"
   license "..."
 
   depends_on "rust" => :build # or "go" => :build
@@ -79,10 +80,14 @@ class MyTool < Formula
 end
 ```
 
+GitHub's generated `/archive/` tarballs are not checksum-stable, so formulae
+pin to the tag's immutable commit. Resolve it with
+`git ls-remote https://github.com/alternet-dev/<repo>.git refs/tags/<tag>^{}`.
+
 **Private repo, prebuilt release binary** (see `panopticon.rb`) — reuse the
 shared download strategy so the GitHub token is applied automatically:
 
-```ruby
+```text
 require_relative "../lib/private_strategy"
 
 class MyTool < Formula
@@ -109,12 +114,12 @@ pull request.
 When an upstream repo cuts a new tag, bump its formula:
 
 - **Automated** — run the **bump formula** workflow from the Actions tab
-  (`workflow_dispatch`). Pick the formula and the new tag; it recomputes the
-  checksum and opens a PR. Covers the source-built formulae (`wss-mux`,
+  (`workflow_dispatch`). Pick the formula and the new tag; it resolves the
+  tag's commit and opens a PR. Covers the source-built formulae (`wss-mux`,
   `wavefront`).
-- **Manual** — edit `url`/`sha256` in `Formula/<name>.rb`. `panopticon` ships a
-  prebuilt binary per platform, so update all three `sha256` values (each
-  release publishes a matching `.sha256` file alongside the asset).
+- **Manual** — for `wss-mux`/`wavefront`, update `tag` and `revision` in
+  `Formula/<name>.rb`. For `panopticon`, update the release `url` and `sha256`
+  for each platform (every release publishes a matching `.sha256` file).
 
 `brew livecheck <formula>` reports when an upstream tag is newer than the
 formula.

@@ -6,7 +6,6 @@ require_relative "../lib/private_strategy"
 class Panopticon < Formula
   desc "Codebase analysis engine and MCP server for AI agents"
   homepage "https://github.com/alternet-dev/panopticon"
-  version "1.0.0"
   license :cannot_represent
 
   if OS.mac?
