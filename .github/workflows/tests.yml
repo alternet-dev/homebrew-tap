@@ -10,13 +10,20 @@ concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   test-bot:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@main
+        with:
+          # setup-homebrew checks out this tap; it is a private repo, so the
+          # checkout needs a token. GITHUB_TOKEN has contents:read on this repo.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Homebrew Bundler RubyGems
         uses: actions/cache@v4
