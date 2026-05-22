@@ -19,22 +19,20 @@ prefix, so the tap name is `alternet-dev/tap`.)
 
 | Formula | Upstream | Description |
 |---------|----------|-------------|
-| `wss-mux` | [alternet-dev/wss-mux](https://github.com/alternet-dev/wss-mux) | WebSocket multiplexer for server-driven event fanout |
 | `wavefront` | [alternet-dev/wavefront](https://github.com/alternet-dev/wavefront) | Edge proxy mapping a versioned external contract onto one internal backend |
 
 ```bash
-brew install alternet-dev/tap/wss-mux
 brew install alternet-dev/tap/wavefront
 ```
 
-Once the tap is added the short form works too — `brew install wss-mux`.
+Once the tap is added the short form works too — `brew install wavefront`.
 
 ## Upgrading
 
 ```bash
 brew update
 brew upgrade            # every formula
-brew upgrade wss-mux    # one formula
+brew upgrade wavefront  # one formula
 ```
 
 ## Adding a formula

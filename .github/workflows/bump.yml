@@ -8,7 +8,6 @@ on:
         required: true
         type: choice
         options:
-          - wss-mux
           - wavefront
       tag:
         description: "New upstream release tag, e.g. v0.6.0"
