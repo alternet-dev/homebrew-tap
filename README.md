@@ -35,6 +35,18 @@ brew upgrade            # every formula
 brew upgrade wavefront  # one formula
 ```
 
+## Publishing from an upstream (recommended)
+
+For tools maintained in their own repositories, the upstream's release workflow pushes its formula here automatically on each release. `wavefront` works this way today — see `alternet-dev/wavefront`'s `.github/workflows/release.yml`.
+
+The pattern:
+
+1. Keep a formula template at `packaging/homebrew-<name>.rb` in the upstream repo (placeholders like `TAG_PLACEHOLDER`, `REVISION_PLACEHOLDER`).
+2. Add an `update-tap` job to the upstream's release workflow. It mints an installation token via [`actions/create-github-app-token@v2`](https://github.com/actions/create-github-app-token) using the **Alternet Tap Publisher** App's credentials, clones this tap, renders the template, commits, and pushes.
+3. The App is installed on this tap with `contents: write`. To onboard a new upstream, extend the App's credential secrets at the org level (`vars.HOMEBREW_TAP_APP_ID`, `secrets.HOMEBREW_TAP_APP_PRIVATE_KEY`) to include that repo — no per-upstream PAT.
+
+The manual flows below remain available for tools that don't use this pattern.
+
 ## Adding a formula
 
 Drop a new file in `Formula/<name>.rb`. Pin `url` to the tag's commit and build
