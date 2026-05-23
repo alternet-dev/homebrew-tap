@@ -16,6 +16,10 @@ permissions:
 jobs:
   test-bot:
     runs-on: ubuntu-latest
+    env:
+      # Bubblewrap is not installed on GitHub-hosted Linux runners; opt out of
+      # Homebrew's Linux sandbox so `brew doctor` doesn't fail in test-bot.
+      HOMEBREW_NO_SANDBOX_LINUX: "true"
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
