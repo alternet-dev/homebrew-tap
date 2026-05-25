@@ -5,8 +5,8 @@ class Wavefront < Formula
   desc "Build and maintain versioned layers in a wavefront edge-proxy bundle"
   homepage "https://github.com/alternet-dev/wavefront"
   url "https://github.com/alternet-dev/wavefront.git",
-      tag:      "v0.3.0",
-      revision: "7b60a251011c11da9d1d647e56586765ba0f5b3b"
+      tag:      "v0.4.0",
+      revision: "4cd7d46bd0dd4fdf7ab4fb3ca10c2fe8cc7a1329"
   license any_of: ["Apache-2.0", "MIT"]
 
   livecheck do
