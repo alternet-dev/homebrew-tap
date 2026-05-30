@@ -1,24 +1,24 @@
 class WavefrontBundle < Formula
   desc "Build and maintain versioned layers in a wavefront edge-proxy bundle"
   homepage "https://github.com/alternet-dev/wavefront"
-  version "0.6.0"
+  version "0.6.1"
   license "MIT OR Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.6.0/wavefront-bundle-v0.6.0-aarch64-apple-darwin.tar.gz"
-      sha256 "b80096fd38f9269ca9ae40c8b5ede6f9afe40835232a820b076293c52ebc6516"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.6.1/wavefront-bundle-v0.6.1-aarch64-apple-darwin.tar.gz"
+      sha256 "003e317f065eba2f554d8fa5e7d7779c8425a6a7547388539f16620297f8c764"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.6.0/wavefront-bundle-v0.6.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "dc5673e4d126e3c413a2e242df70ef23e8ef502ba5c1f31dcd3076673628d674"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.6.1/wavefront-bundle-v0.6.1-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "6d8b936c04446ac3632dccf59fd44734400d93604f3933ea08e9020c90cd83a4"
     end
     on_arm do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.6.0/wavefront-bundle-v0.6.0-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "544ee91b36a09b9e1691821c22cc1406e8d29e5fae1623fa8784b06118e6e621"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.6.1/wavefront-bundle-v0.6.1-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "6b16de780cc6d5482baa9ecb8b5dc868ab1d62ffcfe696ed5187081370ed6ac7"
     end
   end
 
