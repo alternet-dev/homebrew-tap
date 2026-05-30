@@ -1,24 +1,24 @@
 class WssMux < Formula
   desc "WebSocket multiplexer for server-driven event fanout"
   homepage "https://github.com/alternet-dev/wss-mux"
-  version "0.5.3"
+  version "0.6.0"
   license "MIT OR Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/alternet-dev/wss-mux/releases/download/v0.5.3/wss-mux-v0.5.3-aarch64-apple-darwin.tar.gz"
-      sha256 "1a1b1f97af05accfcc04546af258f8f91f592fcbcf7a5f02e61c5fdd0486e11b"
+      url "https://github.com/alternet-dev/wss-mux/releases/download/v0.6.0/wss-mux-v0.6.0-aarch64-apple-darwin.tar.gz"
+      sha256 "099db9ab3b72055a98836c58e435aa8c9e4a53939601bd2e0b30ed8faed2dfa6"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/alternet-dev/wss-mux/releases/download/v0.5.3/wss-mux-v0.5.3-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "0cb460da16a5b86db49f276d343e0cfd14ce30702ecfb157a8824962d95a2c21"
+      url "https://github.com/alternet-dev/wss-mux/releases/download/v0.6.0/wss-mux-v0.6.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "d6477b6f8859dea16971f88bb57ef78258f9ada1a121e92e8b6f06a37f1678d7"
     end
     on_arm do
-      url "https://github.com/alternet-dev/wss-mux/releases/download/v0.5.3/wss-mux-v0.5.3-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "6c6d769ad5ea3634cb9aa62169ec086ba737400184ce9956dd16603bc9176943"
+      url "https://github.com/alternet-dev/wss-mux/releases/download/v0.6.0/wss-mux-v0.6.0-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "1fd63cc6bddc8ea9f34ceb616f1d108312fb381c65f32a8299e06d5aea6d238f"
     end
   end
 
