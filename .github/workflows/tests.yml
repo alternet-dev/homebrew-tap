@@ -20,6 +20,9 @@ jobs:
       # Bubblewrap is not installed on GitHub-hosted Linux runners; opt out of
       # Homebrew's Linux sandbox so `brew doctor` doesn't fail in test-bot.
       HOMEBREW_NO_SANDBOX_LINUX: "true"
+      # Homebrew now requires explicit tap-trust for non-official taps; opt
+      # out for our own tap so `brew test-bot` doesn't refuse to load it.
+      HOMEBREW_NO_REQUIRE_TAP_TRUST: "true"
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
