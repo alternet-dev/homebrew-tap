@@ -12,23 +12,23 @@ class WavefrontBundle < Formula
     # actually downloaded in a real install on Intel macOS.
     depends_on arch: :arm64
     on_arm do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.1/wavefront-bundle-v0.7.1-aarch64-apple-darwin.tar.gz"
-      sha256 "98bd3af094f682f2f3ea45f299c95bb19d06737ec6e24bed6108ffdacd746df4"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.2/wavefront-bundle-v0.7.2-aarch64-apple-darwin.tar.gz"
+      sha256 "683f81cb72bd322ef8a80ffac800877cc07ce2428a77d96201a0411688ef4171"
     end
     on_intel do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.1/wavefront-bundle-v0.7.1-aarch64-apple-darwin.tar.gz"
-      sha256 "98bd3af094f682f2f3ea45f299c95bb19d06737ec6e24bed6108ffdacd746df4"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.2/wavefront-bundle-v0.7.2-aarch64-apple-darwin.tar.gz"
+      sha256 "683f81cb72bd322ef8a80ffac800877cc07ce2428a77d96201a0411688ef4171"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.1/wavefront-bundle-v0.7.1-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "10534a537feedda11a5276e1fe9fd45edef80633612e55e30abaa68d4a5c85f3"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.2/wavefront-bundle-v0.7.2-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "ae1e5e70c1467699599204a1f8dfa6e7d4a5a115e1aa37add86253da0f369dff"
     end
     on_arm do
-      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.1/wavefront-bundle-v0.7.1-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "cd2a837ff649f495d5ca87e9c03ccd9087d2957d418a89b9f4292425a0efb6e9"
+      url "https://github.com/alternet-dev/wavefront/releases/download/v0.7.2/wavefront-bundle-v0.7.2-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "54bb9f5052bd34f246cf7b9cb3d08eb07280d71ee2113ece1badd702191222c8"
     end
   end
 
