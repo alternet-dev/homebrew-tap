@@ -8,7 +8,8 @@ on:
         required: true
         type: choice
         options:
-          - wavefront
+          - wavefront-bundle
+          - wss-mux
       tag:
         description: "New upstream release tag, e.g. v0.6.0"
         required: true
@@ -41,8 +42,17 @@ jobs:
             exit 1
           fi
 
+          case "${FORMULA}" in
+            wavefront-bundle) upstream="wavefront" ;;
+            wss-mux) upstream="wss-mux" ;;
+            *)
+              echo "::error::unsupported formula '${FORMULA}'"
+              exit 1
+              ;;
+          esac
+
           file="Formula/${FORMULA}.rb"
-          repo="https://github.com/alternet-dev/${FORMULA}.git"
+          repo="https://github.com/alternet-dev/${upstream}.git"
 
           # Resolve the tag to its immutable commit SHA. Annotated tags expose
           # the commit through the peeled ^{} ref; a lightweight tag already is
@@ -70,7 +80,7 @@ jobs:
           git push -u origin "${branch}"
 
           gh pr create \
-            --base trunk \
+            --base main \
             --head "${branch}" \
             --title "${FORMULA} ${TAG}" \
             --body "Automated bump of ${FORMULA} to ${TAG} (commit ${revision})."
